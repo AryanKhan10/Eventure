@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String  @unique
+  password  String
+  role  role   @default(user) // user,organizer, admin
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  events Event[] 
+  tickets Ticket[]
+  reviews Review[]
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  title      String
+  description String?
+  organizerId String
+  organizer User @relation (fields: [organizerId], references: [id])
+  location  String
+  ticketPrice Float
+  capacity Int
+  attendees Ticket[]
+  dateTime DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  reviews Review[]
+}
+
+model Ticket {
+  id        String   @id @default(cuid())
+  qrCode     String
+  isCheckedIn Boolean @default(false)
+  BookedAt DateTime @default(now())
+  eventId   String
+  event     Event @relation(fields: [eventId], references: [id])
+  userId    String
+  user      User @relation(fields: [userId], references: [id])
+  updatedAt DateTime @updatedAt
+}
+
+model Review{
+  id Int @id @default(autoincrement())
+  rating Int @default(0)
+  comment String
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum role {
+  user
+  organizer
+  admin
+}
