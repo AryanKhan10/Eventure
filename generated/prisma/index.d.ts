@@ -1286,6 +1286,7 @@ export namespace Prisma {
     role: number
     createdAt: number
     updatedAt: number
+    refreshToken: number
     _all: number
   }
 
@@ -1318,6 +1319,7 @@ export namespace Prisma {
     role?: true
     createdAt?: true
     updatedAt?: true
+    refreshToken?: true
     _all?: true
   }
 
@@ -1401,6 +1403,7 @@ export namespace Prisma {
     role: $Enums.role
     createdAt: Date
     updatedAt: Date
+    refreshToken: string[]
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1428,6 +1431,7 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    refreshToken?: boolean
     events?: boolean | User$eventsArgs<ExtArgs>
     tickets?: boolean | User$ticketsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
@@ -1442,6 +1446,7 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    refreshToken?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1452,6 +1457,7 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    refreshToken?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1462,9 +1468,10 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    refreshToken?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "createdAt" | "updatedAt" | "refreshToken", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     events?: boolean | User$eventsArgs<ExtArgs>
     tickets?: boolean | User$ticketsArgs<ExtArgs>
@@ -1489,6 +1496,7 @@ export namespace Prisma {
       role: $Enums.role
       createdAt: Date
       updatedAt: Date
+      refreshToken: string[]
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1922,6 +1930,7 @@ export namespace Prisma {
     readonly role: FieldRef<"User", 'role'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly refreshToken: FieldRef<"User", 'String[]'>
   }
     
 
@@ -5862,7 +5871,8 @@ export namespace Prisma {
     password: 'password',
     role: 'role',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    refreshToken: 'refreshToken'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -6030,6 +6040,7 @@ export namespace Prisma {
     role?: EnumroleFilter<"User"> | $Enums.role
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    refreshToken?: StringNullableListFilter<"User">
     events?: EventListRelationFilter
     tickets?: TicketListRelationFilter
     reviews?: ReviewListRelationFilter
@@ -6043,6 +6054,7 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    refreshToken?: SortOrder
     events?: EventOrderByRelationAggregateInput
     tickets?: TicketOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
@@ -6059,6 +6071,7 @@ export namespace Prisma {
     role?: EnumroleFilter<"User"> | $Enums.role
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    refreshToken?: StringNullableListFilter<"User">
     events?: EventListRelationFilter
     tickets?: TicketListRelationFilter
     reviews?: ReviewListRelationFilter
@@ -6072,6 +6085,7 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    refreshToken?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -6088,6 +6102,7 @@ export namespace Prisma {
     role?: EnumroleWithAggregatesFilter<"User"> | $Enums.role
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    refreshToken?: StringNullableListFilter<"User">
   }
 
   export type EventWhereInput = {
@@ -6324,6 +6339,7 @@ export namespace Prisma {
     role?: $Enums.role
     createdAt?: Date | string
     updatedAt?: Date | string
+    refreshToken?: UserCreaterefreshTokenInput | string[]
     events?: EventCreateNestedManyWithoutOrganizerInput
     tickets?: TicketCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
@@ -6337,6 +6353,7 @@ export namespace Prisma {
     role?: $Enums.role
     createdAt?: Date | string
     updatedAt?: Date | string
+    refreshToken?: UserCreaterefreshTokenInput | string[]
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
     tickets?: TicketUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -6350,6 +6367,7 @@ export namespace Prisma {
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: UserUpdaterefreshTokenInput | string[]
     events?: EventUpdateManyWithoutOrganizerNestedInput
     tickets?: TicketUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
@@ -6363,6 +6381,7 @@ export namespace Prisma {
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: UserUpdaterefreshTokenInput | string[]
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -6376,6 +6395,7 @@ export namespace Prisma {
     role?: $Enums.role
     createdAt?: Date | string
     updatedAt?: Date | string
+    refreshToken?: UserCreaterefreshTokenInput | string[]
   }
 
   export type UserUpdateManyMutationInput = {
@@ -6386,6 +6406,7 @@ export namespace Prisma {
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: UserUpdaterefreshTokenInput | string[]
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -6396,6 +6417,7 @@ export namespace Prisma {
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: UserUpdaterefreshTokenInput | string[]
   }
 
   export type EventCreateInput = {
@@ -6662,6 +6684,14 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type EventListRelationFilter = {
     every?: EventWhereInput
     some?: EventWhereInput
@@ -6700,6 +6730,7 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    refreshToken?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -6998,6 +7029,10 @@ export namespace Prisma {
     rating?: SortOrder
   }
 
+  export type UserCreaterefreshTokenInput = {
+    set: string[]
+  }
+
   export type EventCreateNestedManyWithoutOrganizerInput = {
     create?: XOR<EventCreateWithoutOrganizerInput, EventUncheckedCreateWithoutOrganizerInput> | EventCreateWithoutOrganizerInput[] | EventUncheckedCreateWithoutOrganizerInput[]
     connectOrCreate?: EventCreateOrConnectWithoutOrganizerInput | EventCreateOrConnectWithoutOrganizerInput[]
@@ -7050,6 +7085,11 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type UserUpdaterefreshTokenInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type EventUpdateManyWithoutOrganizerNestedInput = {
@@ -7687,6 +7727,7 @@ export namespace Prisma {
     role?: $Enums.role
     createdAt?: Date | string
     updatedAt?: Date | string
+    refreshToken?: UserCreaterefreshTokenInput | string[]
     tickets?: TicketCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
   }
@@ -7699,6 +7740,7 @@ export namespace Prisma {
     role?: $Enums.role
     createdAt?: Date | string
     updatedAt?: Date | string
+    refreshToken?: UserCreaterefreshTokenInput | string[]
     tickets?: TicketUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
   }
@@ -7782,6 +7824,7 @@ export namespace Prisma {
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: UserUpdaterefreshTokenInput | string[]
     tickets?: TicketUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
   }
@@ -7794,6 +7837,7 @@ export namespace Prisma {
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: UserUpdaterefreshTokenInput | string[]
     tickets?: TicketUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -7871,6 +7915,7 @@ export namespace Prisma {
     role?: $Enums.role
     createdAt?: Date | string
     updatedAt?: Date | string
+    refreshToken?: UserCreaterefreshTokenInput | string[]
     events?: EventCreateNestedManyWithoutOrganizerInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
   }
@@ -7883,6 +7928,7 @@ export namespace Prisma {
     role?: $Enums.role
     createdAt?: Date | string
     updatedAt?: Date | string
+    refreshToken?: UserCreaterefreshTokenInput | string[]
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
   }
@@ -7950,6 +7996,7 @@ export namespace Prisma {
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: UserUpdaterefreshTokenInput | string[]
     events?: EventUpdateManyWithoutOrganizerNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
   }
@@ -7962,6 +8009,7 @@ export namespace Prisma {
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: UserUpdaterefreshTokenInput | string[]
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -7974,6 +8022,7 @@ export namespace Prisma {
     role?: $Enums.role
     createdAt?: Date | string
     updatedAt?: Date | string
+    refreshToken?: UserCreaterefreshTokenInput | string[]
     events?: EventCreateNestedManyWithoutOrganizerInput
     tickets?: TicketCreateNestedManyWithoutUserInput
   }
@@ -7986,6 +8035,7 @@ export namespace Prisma {
     role?: $Enums.role
     createdAt?: Date | string
     updatedAt?: Date | string
+    refreshToken?: UserCreaterefreshTokenInput | string[]
     events?: EventUncheckedCreateNestedManyWithoutOrganizerInput
     tickets?: TicketUncheckedCreateNestedManyWithoutUserInput
   }
@@ -8047,6 +8097,7 @@ export namespace Prisma {
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: UserUpdaterefreshTokenInput | string[]
     events?: EventUpdateManyWithoutOrganizerNestedInput
     tickets?: TicketUpdateManyWithoutUserNestedInput
   }
@@ -8059,6 +8110,7 @@ export namespace Prisma {
     role?: EnumroleFieldUpdateOperationsInput | $Enums.role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshToken?: UserUpdaterefreshTokenInput | string[]
     events?: EventUncheckedUpdateManyWithoutOrganizerNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutUserNestedInput
   }

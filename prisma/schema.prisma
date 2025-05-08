@@ -25,6 +25,7 @@ model User {
   events Event[] 
   tickets Ticket[]
   reviews Review[]
+  refreshToken String[]
 }
 
 model Event {
