@@ -98,7 +98,16 @@ const signIn = async (req, res) => {
         }, process.env.JWT_SECRET, {
             expiresIn: '1min'
         });
-
+        await prisma.user.update({
+            where: {
+                id: user.id
+            },
+            data: {
+                refreshToken: {
+                    push: refreshToken
+                }
+            }
+        })
         const options={
             expiresIn: new Date(Date.now() +1*60*1000),
             httpOnly: true,
@@ -126,6 +135,27 @@ const signIn = async (req, res) => {
             message: "Internal server error",
             error:error.message
         });
+    }
+}
+
+const refreshToken = async (req, res) => {
+    try {
+        const refreshToken = req.body || req.cookies || req.headers.authorization;
+        if (!refreshToken) return res.status(401).json({ message: "Unauthorized" });
+        try {
+            
+        } catch (error) {
+            console.error(error);
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+    } catch (error) {
+        console.error("Error in refreshToken:", error);
+        res.status(500).json({ 
+            success: false,
+            message: "Internal server error",
+            error:error.message
+        });
+        
     }
 }
 
