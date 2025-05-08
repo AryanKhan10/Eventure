@@ -140,7 +140,7 @@ const signIn = async (req, res) => {
 
 const refreshToken = async (req, res) => {
     try {
-        const refreshToken = req.body || req.cookies || req.headers.authorization;
+        const refreshToken = req.body.refreshToken || req.cookies.refreshToken || req.headers["authorization"]?.replace("Bearer ","");
         if (!refreshToken) return res.status(401).json({ message: "Unauthorized" });
         try {
             const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
@@ -187,4 +187,4 @@ const refreshToken = async (req, res) => {
     }
 }
 
-export {signIn, signUp};
+export {signIn, signUp, refreshToken};
