@@ -143,7 +143,35 @@ const refreshToken = async (req, res) => {
         const refreshToken = req.body || req.cookies || req.headers.authorization;
         if (!refreshToken) return res.status(401).json({ message: "Unauthorized" });
         try {
+            const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+            const user = await prisma.user.findUnique({
+                where:{
+                    id: decoded.id
+                }
+            })
+            if (!user) return res.status(401).json({ message: "Unauthorized" });
+            if (!user.refreshToken.includes(refreshToken)) return res.status(401).json({ message: "Unauthorized" });
             
+            //create a new token
+            const accessToken = jwt.sign({
+                id: user.id,
+                email: user.email,
+                role: user.role,
+            }, process.env.JWT_SECRET, {
+                expiresIn: '1min'
+            });
+            // Send a success response
+            res.status(200).json({
+                success: true,
+                message: "User logged in successfully",
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    name: user.name,
+                    role: user.role
+                },
+                accessToken: accessToken,
+            })
         } catch (error) {
             console.error(error);
             return res.status(401).json({ message: "Unauthorized" });
