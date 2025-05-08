@@ -14,7 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Import routes
 import authRoutes from './routes/auth.routes.js';
+import eventRoutes from './routes/event.routes.js';
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/organizer', eventRoutes);
 
 
 app.get('/', (req, res) => {

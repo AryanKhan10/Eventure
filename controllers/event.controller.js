@@ -205,7 +205,7 @@ const getAllEvents = async (req, res) => {
     }
 }
 
-const bookTicket = async (req, res) => {
+const bookedTicket = async (req, res) => {
     try {
         const eventId = req.params.eventId;
         const userId = req.user.id;
