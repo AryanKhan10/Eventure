@@ -187,4 +187,49 @@ const refreshToken = async (req, res) => {
     }
 }
 
-export {signIn, signUp, refreshToken};
+const deleteUser = async (req, res) => {
+    try {
+        const {userId} = req.params;
+        if (!userId) {
+            return res.status(400).json({ 
+                success: false,
+                message: "User ID is required"
+            });
+        }
+
+        // Check if the user exists
+        const user = await prisma.user.findUnique({
+            where:{
+                id: userId
+            }
+        })
+
+        if (!user) {
+            return res.status(404).json({ 
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        // Delete the user
+        await prisma.user.delete({
+            where: {
+                id: userId,
+            },
+        });
+
+        res.status(200).json({ 
+            success: true,
+            message: "User deleted successfully",
+        });
+
+    } catch (error) {
+        console.error("Error in deleteUser:", error);
+        res.status(500).json({ 
+            success: false,
+            message: "Internal server error",
+            error:error.message
+        });
+    }
+}
+export {signIn, signUp, refreshToken, deleteUser};
