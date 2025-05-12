@@ -17,7 +17,7 @@ import authRoutes from './routes/auth.routes.js';
 import eventRoutes from './routes/event.routes.js';
 import reviewRoutes from './routes/review.route.js'
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/organizer', eventRoutes);
+app.use('/api/v1/event', eventRoutes);
 app.use('/api/v1/review', reviewRoutes);
 
 

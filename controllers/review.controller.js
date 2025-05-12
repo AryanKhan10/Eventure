@@ -1,4 +1,4 @@
-import prisma from "../db/db.config";
+import prisma from "../db/db.config.js";
 
 const createReview = async (req, res) => {
     try {

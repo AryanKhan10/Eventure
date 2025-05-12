@@ -89,14 +89,14 @@ const signIn = async (req, res) => {
             email: user.email,
             role: user.role,
         }, process.env.JWT_SECRET, {
-            expiresIn: '1min'
+            expiresIn: '7h'
         });
         const refreshToken = jwt.sign({
             id: user.id,
             email: user.email,
             role: user.role,
         }, process.env.JWT_SECRET, {
-            expiresIn: '1min'
+            expiresIn: '10h'
         });
         await prisma.user.update({
             where: {
@@ -109,7 +109,7 @@ const signIn = async (req, res) => {
             }
         })
         const options={
-            expiresIn: new Date(Date.now() +1*60*1000),
+            expiresIn: new Date(Date.now() +10*24*60*60*1000),
             httpOnly: true,
         }
         // Send a success response
@@ -140,10 +140,12 @@ const signIn = async (req, res) => {
 
 const refreshToken = async (req, res) => {
     try {
+        console.log("Refresh token", req.body.refreshToken);
         const refreshToken = req.body.refreshToken || req.cookies.refreshToken || req.headers["authorization"]?.replace("Bearer ","");
         if (!refreshToken) return res.status(401).json({ message: "Unauthorized" });
         try {
             const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+            console.log("decoded", decoded);
             const user = await prisma.user.findUnique({
                 where:{
                     id: decoded.id

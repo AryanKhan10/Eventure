@@ -1,9 +1,11 @@
 import prisma from "../db/db.config.js";
+import moment from "moment";
+
 
 const createEvent = async (req, res) => {
     try {
-        const { title, description, ticketPrice, dateTime, location } = req.body;
-        if(!title || !description || ticketPrice || dateTime || !location){
+        const { title, description, ticketPrice, dateTime, location,capacity } = req.body;
+        if(!title || !description || !ticketPrice || !dateTime || !location || !capacity){
             return res.status(400).json({ 
                 success: false,
                 message: "All fields are required"
@@ -11,14 +13,18 @@ const createEvent = async (req, res) => {
         }
         const userId = req.user.id; 
 
+        const formattedDate = moment(dateTime, "D/M/YYYY h:mmA").toISOString(); // "2025-05-31T17:00:00.000Z"
+
+
         const event = await prisma.event.create({
             data: {
                 title,
                 description,
                 ticketPrice,
-                dateTime,
+                dateTime:new Date(formattedDate),
                 location,
-                organizer:userId, 
+                organizerId:userId, 
+                capacity,
             },
         });
 
@@ -152,6 +158,9 @@ const getEvent = async (req, res) => {
                 id: eventId,
                 organizer: userId, 
             },
+            include: {
+                tickets: true,
+            }
         })
         if (!event) {
             return res.status(404).json({ 
@@ -205,6 +214,7 @@ const getAllEvents = async (req, res) => {
     }
 }
 
+// all tickets booked by the user for a specific event
 const bookedTicket = async (req, res) => {
     try {
         const eventId = req.params.eventId;
