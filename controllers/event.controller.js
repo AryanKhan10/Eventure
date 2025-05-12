@@ -245,5 +245,5 @@ export {
     deleteEvent,
     getEvent,
     getAllEvents,
-    bookTicket
+    bookedTicket
 };

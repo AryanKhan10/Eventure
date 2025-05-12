@@ -33,7 +33,7 @@ model Event {
   title      String
   description String?
   organizerId String
-  organizer User @relation (fields: [organizerId], references: [id])
+  organizer User @relation (fields: [organizerId], references: [id], onDelete: Cascade)
   location  String
   ticketPrice Float
   capacity Int
@@ -50,9 +50,9 @@ model Ticket {
   isCheckedIn Boolean @default(false)
   BookedAt DateTime @default(now())
   eventId   String
-  event     Event @relation(fields: [eventId], references: [id])
+  event     Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
   userId    String
-  user      User @relation(fields: [userId], references: [id])
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
   updatedAt DateTime @updatedAt
 }
 
@@ -61,9 +61,9 @@ model Review{
   rating Int @default(0)
   comment String
   userId String
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

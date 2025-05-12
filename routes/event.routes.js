@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import { createEvent, updateEvent, deleteEvent, getAllEvents, getEvent, bookedTicket } from '../controllers/event.controller.js';
-import { auth, isOrganizer, isAdmin } from '../middleware/auth.middleware.js';
+import { auth, isOrganizer, isAdmin } from '../middlewares/auth.middleware.js';
 
 router.post('/create-event', auth, isOrganizer, createEvent);
 router.put('/update-event/:eventId', auth, isOrganizer, updateEvent);
