@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-
+import { signup } from "../services/auth";
+import { setUser } from "../slices/auth";
+import { useDispatch, useSelector } from "react-redux";
 function Signup() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const {loading} = useSelector(state => state.auth)
+  const [loading,setLoading] = useState(false)
   const {
     register,
     handleSubmit,
@@ -42,10 +47,19 @@ function Signup() {
     return true;
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("Form submitted:", data);
+      setLoading(true)
+
+    const result = await signup(data)
+    console.log(result)
+    if(result){
+      dispatch(setUser(result.user))
+      setLoading(false)
+      navigate("/login");
+    }
+    
     // In a real app, you would call your authentication API here
-    navigate("/login");
   };
 
   return (
@@ -230,7 +244,7 @@ function Signup() {
                 <option value="">Select your role</option>
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
-                <option value="manager">Manager</option>
+                <option value="organizer">Organizer</option>
               </select>
               {errors.role && <p className="mt-1 text-sm text-red-600">{errors.role.message}</p>}
             </div>
@@ -238,10 +252,11 @@ function Signup() {
 
           <div>
             <button
+              disabled={loading}
               type="submit"
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2.5 px-4 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
+              className="cursor-pointer group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2.5 px-4 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              Create Account
+             {!loading ? "Create Account": "loading..."}
             </button>
           </div>
           
@@ -250,7 +265,7 @@ function Signup() {
             <button 
               type="button" 
               onClick={() => navigate("/login")}
-              className="font-medium text-gray-900 hover:text-black underline-offset-2 hover:underline transition-all duration-200"
+              className="cursor-pointer font-medium text-gray-900 hover:text-black underline-offset-2 hover:underline transition-all duration-200"
             >
               Sign in
             </button>

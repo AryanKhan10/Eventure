@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '../store/store'
 import { setToken } from '../slices/auth';
-import { authEndpoints } from './apis';
+import { authEndpoints } from './api';
 
 const instance = axios.create({
     withCredentials: true, // important to enable cookies
