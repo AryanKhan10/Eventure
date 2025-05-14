@@ -1,0 +1,4 @@
+
+const signup = async(data)=>{
+
+}
