@@ -1,7 +1,7 @@
 import { authEndpoints } from './api'
 import apiConnector from './apiConntector'
 import { toast } from 'react-toastify'
-import { setLoading } from '../slices/auth'
+
 export const signup = async(data)=>{
 
     try {
@@ -21,3 +21,23 @@ export const signup = async(data)=>{
     }
 
 }
+export const login = async(data)=>{
+    
+    try {
+        const res = await apiConnector("POST",authEndpoints.LOGIN_API,data)
+        console.log(res.data)
+        if(!res.data.success){
+            console.log("asdas")
+            toast.error(res.data.message)
+            throw new Error("Error while logging")
+        }
+        toast.success("logged In Successfully!")
+
+        return res.data
+
+    } catch (error) {
+        console.log("Error while logging",error)
+    }
+
+}
+

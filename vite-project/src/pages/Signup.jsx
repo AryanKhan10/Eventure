@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../services/auth";
 import { setUser } from "../slices/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
