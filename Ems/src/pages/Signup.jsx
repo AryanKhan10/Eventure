@@ -54,7 +54,7 @@ function Signup() {
     const result = await signup(data)
     console.log(result)
     if(result){
-      dispatch(setUser(result.user))
+      // dispatch(setUser(result.user))
       setLoading(false)
       navigate("/login");
     }

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import { useNavigate, Link } from "react-router-dom"
-import { setToken } from "../slices/auth"
+import { setToken, setUser } from "../slices/auth"
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { login } from "../services/auth";
@@ -31,6 +31,7 @@ function Login() {
         console.log(result)
         if(result){
           dispatch(setToken(result.accessToken))
+          dispatch(setUser(result.user))
           navigate("/dashboard")
         }
         setLoading(false)
@@ -58,7 +59,7 @@ function Login() {
                 id="email"
                 type="email"
                 placeholder="Enter your email"
-                className={`mt-1 block w-full rounded-md border ${
+                className={`bg-white mt-1 block w-full rounded-md border ${
                   errors.email ? "border-red-500" : "border-gray-300"
                 } px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 transition-colors duration-200`}
                 {...register("email", {
@@ -81,7 +82,7 @@ function Login() {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
-                className={`mt-1 block w-full rounded-md border ${
+                className={`bg-white mt-1 block w-full rounded-md border ${
                   errors.password ? "border-red-500" : "border-gray-300"
                 } px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 transition-colors duration-200`}
                 {...register("password", {

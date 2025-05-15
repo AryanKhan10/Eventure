@@ -28,7 +28,7 @@ export const login = async(data)=>{
         console.log(res.data)
         if(!res.data.success){
             console.log("asdas")
-            toast.error(res.data.message)
+            toast.error(res.data.message || "Login failed");
             throw new Error("Error while logging")
         }
         toast.success("logged In Successfully!")
@@ -37,6 +37,7 @@ export const login = async(data)=>{
 
     } catch (error) {
         console.log("Error while logging",error)
+        toast.error(error?.response?.data?.message || error.message || "Something went wrong during login");
     }
 
 }
