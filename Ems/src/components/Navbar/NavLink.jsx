@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NavLink = ({ item, isMobile, linkClasses, closeMenu }) => {
-  console.log(item)
+  console.log(item.path)
   const handleClick = (e) => {
     e.preventDefault();
     closeMenu();
@@ -10,10 +11,10 @@ const NavLink = ({ item, isMobile, linkClasses, closeMenu }) => {
   
   return (
     <div className={isMobile ? '' : 'relative group'}>
-      <a
-        href={item?.href}
+      <Link
+        to={`${item?.path}`}
         className={linkClasses}
-        onClick={handleClick}
+        // onClick={handleClick}
         aria-current={item?.current ? 'page' : undefined}
       >
         {item?.name}
@@ -22,7 +23,7 @@ const NavLink = ({ item, isMobile, linkClasses, closeMenu }) => {
         {!isMobile && item?.current && (
           <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary-500 rounded-full" />
         )}
-      </a>
+      </Link>
     </div>
   );
 };

@@ -63,7 +63,7 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12 mt-10 sm:px-6 lg:px-8">
       <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 space-y-8 transition-all duration-300 hover:shadow-xl">
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Create an Account</h1>

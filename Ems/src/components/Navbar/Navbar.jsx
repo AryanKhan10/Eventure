@@ -49,7 +49,7 @@ const Navbar = () => {
   }, [isOpen]);
 
   const navbarClasses = `
-    fixed top-0 left-0 right-0 z-50 
+    fixed top-0 left-0 right-0 z-50 border border-b-2
     ${hasScrolled 
       ? 'bg-white shadow-subtle' 
       : 'bg-white/90 backdrop-blur-sm'}

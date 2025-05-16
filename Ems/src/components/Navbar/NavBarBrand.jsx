@@ -1,4 +1,3 @@
-import React from 'react';
 
 const NavbarBrand = ({ onClick }) => {
   return (
@@ -12,10 +11,10 @@ const NavbarBrand = ({ onClick }) => {
         }}
       >
         <div className="h-8 w-8 bg-gradient-to-br from-primary-600 to-primary-400 rounded-lg flex items-center justify-center shadow-subtle">
-          <span className="text-white font-bold text-lg">N</span>
+          <span className="text-white font-bold text-lg">E</span>
         </div>
-        <span className="font-semibold text-lg tracking-tight hidden sm:block">
-          NavBrand
+        <span className="font-semibold text-lg tracking-tight hidden sm:block text-primary-600">
+         Eventure
         </span>
       </a>
     </div>

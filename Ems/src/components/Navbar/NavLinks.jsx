@@ -6,13 +6,13 @@ const NavLinks = ({ isMobile = false, closeMenu = () => {} }) => {
   const role  = useSelector((state) => state.auth?.user?.role);
 
   const navItems = [
-    { role: "user", name: 'Events', href: '/events', current: true },
-    { role: "user", name: 'My Tickets', href: '/my-tickets', current: false },
-    { role: "organizer", name: 'Create Event', href: '/create-events', current: false },
-    { role: "organizer", name: 'My Event', href: '/my-events', current: false },
-    { role: "admin", name: 'Dashboard', href: '/dashboard', current: false },
-    { role: "admin", name: 'Manage Users', href: '/manage-users', current: false },
-    { role: "admin", name: 'Manage Events', href: '/manage-events', current: false },
+    { role: "user", name: 'Events', path: '/events', current: true },
+    { role: "user", name: 'My Tickets', path: '/my-tickets', current: false },
+    { role: "organizer", name: 'Create Event', path: '/create-event', current: false },
+    { role: "organizer", name: 'My Event', path: '/my-events', current: false },
+    { role: "admin", name: 'Dashboard', path: '/dashboard', current: false },
+    { role: "admin", name: 'Manage Users', path: '/manage-users', current: false },
+    { role: "admin", name: 'Manage Events', path: '/manage-events', current: false },
   ];
 
   const filteredNavItems = navItems.filter(item => item.role === role);

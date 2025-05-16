@@ -1,3 +1,4 @@
+import { setToken, setUser } from '../slices/auth'
 import { authEndpoints } from './api'
 import apiConnector from './apiConntector'
 import { toast } from 'react-toastify'
@@ -40,5 +41,12 @@ export const login = async(data)=>{
         toast.error(error?.response?.data?.message || error.message || "Something went wrong during login");
     }
 
+}
+export const logout = async(dispatch)=>{
+    dispatch(setUser(null))
+    dispatch(setToken(null))
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    toast.success("Logged Out")
 }
 
