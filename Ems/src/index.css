@@ -1,4 +1,4 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -35,7 +35,7 @@ a:hover {
   color: #535bf2;
 }
 
-/* button {
+.button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -45,10 +45,10 @@ a:hover {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-} */
+}
 
-button:focus,
-button:focus-visible {
+.button:focus,
+.button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
@@ -64,7 +64,7 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
-  button {
+  .button {
     background-color: #f9f9f9;
   }
-}
+} */
