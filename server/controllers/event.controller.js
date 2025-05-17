@@ -20,11 +20,11 @@ const createEvent = async (req, res) => {
             data: {
                 title,
                 description,
-                ticketPrice,
+                ticketPrice:parseFloat(ticketPrice),
                 dateTime:new Date(formattedDate),
                 location,
                 organizerId:userId, 
-                capacity,
+                capacity:Number(capacity),
             },
         });
 

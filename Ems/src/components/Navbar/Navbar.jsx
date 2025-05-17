@@ -39,7 +39,10 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/" className="text-2xl font-bold text-gray-800">Event Scribe</Link>
+              <div className="mx-2 h-8 w-8 bg-gradient-to-br from-purple-500 to-blue-300 rounded-lg flex items-center justify-center shadow-subtle">
+              <span className="text-white font-bold text-lg">E</span>
+            </div>
+              <Link to="/" className="text-2xl font-bold text-gray-800">Eventure</Link>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               {filteredNavItems.map((item) => (

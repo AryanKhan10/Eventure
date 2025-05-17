@@ -15,13 +15,13 @@ const ActionButtons = ({ containerClasses }) => {
         (
           <>
             <Link to={'/login'}
-              className='rounded-md border border-purple-500 text-lg font-semibold  p-2 text-purple-500 hover:text-purple-500 transition-all duration-200 delay-100'
+              className='cursor-pointer group relative mx-2 rounded-md border border-transparent bg-black py-2.5 px-4 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]'
             >
               Log in
             </Link>
             <Link 
               to={"/signup"}
-              className="rounded-md border border-purple-500 text-lg font-semibold p-2 text-purple-500 hover:text-purple-500 transition-all duration-200 delay-100"
+              className="cursor-pointer group relative mx-2 rounded-md border border-transparent bg-black py-2.5 px-4 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
             >
               Sign up
             </Link>
@@ -30,7 +30,7 @@ const ActionButtons = ({ containerClasses }) => {
           <>
             <Link 
               to={"/"}
-              className="rounded-md border border-purple-500 text-lg font-semibold p-2 text-purple-500 hover:text-purple-500 transition-all duration-200 delay-100"
+              className="cursor-pointer group relative mx-2 rounded-md border border-transparent bg-black py-2.5 px-4 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
               onClick={()=>{logout(dispatch)}}
             >
               Logout

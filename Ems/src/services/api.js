@@ -5,3 +5,8 @@ export const authEndpoints ={
     LOGIN_API: `${BASE_URL}/auth/signin`,
     REFRESH_API: `${BASE_URL}/auth/refresh-token`,
 }
+export const eventEndpoints ={
+    CREATE_EVENT_API: `${BASE_URL}/event/create-event`,
+    UPDATE_EVENT_API: `${BASE_URL}/event/update-event/:eventId`,
+    DELETE_EVENT_API: `${BASE_URL}/event/delete-event/:eventId`,
+}

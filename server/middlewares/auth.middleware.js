@@ -2,9 +2,10 @@ import jwt from "jsonwebtoken";
 
 const auth = async (req, res, next) => {
   try {
-    console.log("Auth middleware", req.body, req.cookies, req.headers);
-    const token = req.body.accessToken || req.cookie.accessToken || req.headers.authorization;
+    console.log("Auth midd?leware", req.headers["authorization"]?.replace("Bearer ",""));
+    const token = req.body?.token || req.cookies?.token || req.headers["authorization"]?.replace("Bearer ","");
 
+    console.log(token)
     if (!token) return res.status(401).json({ message: "Unauthorized" });
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
