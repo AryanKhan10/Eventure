@@ -34,7 +34,7 @@ export const getAllEvents = async(token)=>{
             toast.error(res.data.message || "Couldn't fetch events");
             throw new Error("Error fetching events")
         }
-        toast.success(res.data.message || "Got All Events")
+        // toast.success(res.data.message || "Got All Events")
 
         return res.data.events
 

@@ -5,6 +5,7 @@ import moment from "moment";
 const createEvent = async (req, res) => {
     try {
         const { title, description, ticketPrice, dateTime, location,capacity } = req.body;
+        // console.log(dateTime)
         if(!title || !description || !ticketPrice || !dateTime || !location || !capacity){
             return res.status(400).json({ 
                 success: false,
@@ -13,8 +14,8 @@ const createEvent = async (req, res) => {
         }
         const userId = req.user.id; 
 
-        const formattedDate = moment(dateTime, "D/M/YYYY h:mmA").toISOString(); // "2025-05-31T17:00:00.000Z"
-
+        // const formattedDate = moment(dateTime, "D/M/YYYY h:mmA").toISOString(); // "2025-05-31T17:00:00.000Z"
+        // console.log(dateTime)
 
         const event = await prisma.event.create({
             data: {

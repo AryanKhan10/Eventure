@@ -34,7 +34,7 @@ function MyEvent() {
     };
 
     fetchEvents();
-  }, []);
+  }, [dispatch, token]);
     
    
     
