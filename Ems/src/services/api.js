@@ -7,6 +7,7 @@ export const authEndpoints ={
 }
 export const eventEndpoints ={
     CREATE_EVENT_API: `${BASE_URL}/event/create-event`,
+    CREATE_EVENT_API: `${BASE_URL}/event/create-event`,
     UPDATE_EVENT_API: `${BASE_URL}/event/update-event/:eventId`,
-    DELETE_EVENT_API: `${BASE_URL}/event/delete-event/:eventId`,
+    GET_ALL_EVENTS_API: `${BASE_URL}/event/get-all-events`,
 }

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState ={
     editable: false,
-    event: localStorage.getItem("event") ? JSON.parse(localStorage.getItem("event")) :null
+    events: localStorage.getItem("events") ? localStorage.getItem("events") :[]
 }
 
 const eventSlice = createSlice({
@@ -10,8 +10,9 @@ const eventSlice = createSlice({
     initialState,
     reducers: {
         setEvent:(state, action)=>{
-            state.event = action.payload;
-            localStorage.setItem("event", JSON.stringify(action.payload))
+            state.events = action.payload;
+            console.log(action.payload)
+            localStorage.setItem("events", JSON.stringify(action.payload))
         },
         setIsEditable:(state, action)=>{
             state.editable = action.payload;

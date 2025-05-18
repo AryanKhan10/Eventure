@@ -23,3 +23,24 @@ export const createEvent = async(data, token)=>{
     }
 
 }
+export const getAllEvents = async(token)=>{
+    try {
+        const res = await apiConnector("GET",eventEndpoints.GET_ALL_EVENTS_API,null,
+            {authorization: `Bearer ${token}`}
+        )
+        console.log(res.data)
+
+        if(!res.data.success){
+            toast.error(res.data.message || "Couldn't fetch events");
+            throw new Error("Error fetching events")
+        }
+        toast.success(res.data.message || "Got All Events")
+
+        return res.data.events
+
+    } catch (error) {
+        console.log("Error fetching events",error)
+        toast.error(error?.response?.data?.message || error.message || "Something went wrong while fetching eventts");
+    }
+
+}

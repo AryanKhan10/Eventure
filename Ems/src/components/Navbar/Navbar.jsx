@@ -28,7 +28,7 @@ const Navbar = () => {
   // For user, show only user routes
   const filteredNavItems = navItems.filter(item =>item.role === role);
 
-  console.log(filteredNavItems)
+  // console.log(filteredNavItems)
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };

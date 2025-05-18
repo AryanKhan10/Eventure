@@ -6,7 +6,7 @@ import { createEvent } from '../services/event'
 import { useNavigate } from 'react-router-dom'
 function CreateEventForm() {
 
-    const { editable, event } = useSelector( state => state.event )
+    const { editable } = useSelector( state => state.event )
     const { token } = useSelector( state=> state.auth)
     const dispatch= useDispatch()
     const navigate= useNavigate()
@@ -73,9 +73,8 @@ function CreateEventForm() {
     const result = createEvent(finalData,token)
     
     if(result){
-        // navigate('/my-events')
+        navigate('/my-events')
     }
-    // dispatch(setEvent(finalData));
 
   };
 

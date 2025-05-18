@@ -190,7 +190,7 @@ const getAllEvents = async (req, res) => {
         const userId = req.user.id;
         const events = await prisma.event.findMany({
             where: {
-                organizer: userId, 
+                organizerId: userId, 
             },
         })
         if (!events) {

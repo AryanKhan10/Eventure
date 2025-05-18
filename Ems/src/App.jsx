@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/NavBar'
 import './App.css'
 import { useSelector } from 'react-redux'
 import CreateEvent from './pages/CreateEvent'
+import MyEvent from './pages/MyEvent'
 function App() {
   const role = useSelector(state => state.auth?.user?.role)
   return (
@@ -19,6 +20,7 @@ function App() {
           role === 'organizer' &&
             <>
              <Route path='create-event' element={<CreateEvent/>}/>
+             <Route path='my-events' element={<MyEvent/>}/>
             </>
           
         }
