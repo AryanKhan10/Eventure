@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState ={
     editable: false,
-    events: localStorage.getItem("events") ? localStorage.getItem("events") :[]
+    events: localStorage.getItem("events") ? JSON.parse(localStorage.getItem("events")) :[]
 }
 
 const eventSlice = createSlice({
@@ -11,7 +11,6 @@ const eventSlice = createSlice({
     reducers: {
         setEvent:(state, action)=>{
             state.events = action.payload;
-            console.log(action.payload)
             localStorage.setItem("events", JSON.stringify(action.payload))
         },
         setIsEditable:(state, action)=>{

@@ -95,8 +95,8 @@ const updateEvent = async (req, res) => {
 
 const deleteEvent = async (req, res) => {
     try {
+        console.log(req)
         const eventId = req.params.eventId;
-
         if (!eventId) {
             return res.status(400).json({ 
                 success: false,
@@ -110,7 +110,7 @@ const deleteEvent = async (req, res) => {
         const event = await prisma.event.findUnique({
             where: {
                 id: eventId,
-                organizer: userId, 
+                organizerId: userId, 
             },
         })
 

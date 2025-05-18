@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllEvents } from '../services/event'
 import { useNavigate } from 'react-router-dom'
 import { setEvent } from '../slices/event'
+import ConfirmationModal from '../components/ConfirmationModal'
 function MyEvent() {
 
     const {events} = useSelector(state=>state.event)
     const {token} = useSelector(state=>state.auth)
-    const[loading, setLoading] = useState(false)
-    const[AllEvents, setAllEvents] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [confirmationModal, setConfirmationModal]= useState(false);
+    
     const dispatch = useDispatch()
     const navigate = useNavigate()
     console.log(events)
@@ -19,15 +21,6 @@ function MyEvent() {
     useEffect(() => {
     const fetchEvents = async () => {
       setLoading(true);
-
-      const storedEvents = localStorage.getItem("events");
-
-      if (storedEvents) {
-        // Use cached data
-        const parsedEvents = JSON.parse(storedEvents);
-        dispatch(setEvent(parsedEvents));
-      } else {
-        // Fetch from API
         try {
           const result = await getAllEvents(token);
           if (result) {
@@ -36,13 +29,12 @@ function MyEvent() {
         } catch (error) {
           toast.error("Failed to fetch events");
         }
-      }
 
       setLoading(false);
     };
 
     fetchEvents();
-  }, [dispatch, token]);
+  }, []);
     
    
     
@@ -71,11 +63,12 @@ function MyEvent() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {Array.isArray(events) && events?.map(event => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-center">
+          {Array.isArray(events) && events.map(event => (
             <EventCard 
               key={event.id} 
-              event={event} 
+              event={event}
+              setConfirmationModal={setConfirmationModal} 
 
             />
           ))}
@@ -83,6 +76,11 @@ function MyEvent() {
       )
         )
       }
+
+      {
+        confirmationModal && 
+            <ConfirmationModal data={confirmationModal}/>
+    }
     </div>
   )
 }

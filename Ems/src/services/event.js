@@ -44,3 +44,24 @@ export const getAllEvents = async(token)=>{
     }
 
 }
+export const deleteEvent = async(token,eventId)=>{
+    try {
+        const res = await apiConnector("DELETE",`${eventEndpoints.DELETE_EVENT_API}/${eventId}`,null,
+            {authorization: `Bearer ${token}`}, 
+        )
+        console.log(res.data)
+
+        if(!res.data.success){
+            toast.error(res.data.message || "Couldn't fetch events");
+            throw new Error("Error fetching events")
+        }
+        toast.success(res.data.message || "Got All Events")
+
+        return true
+
+    } catch (error) {
+        console.log("Error fetching events",error)
+        toast.error(error?.response?.data?.message || error.message || "Something went wrong while fetching eventts");
+    }
+
+}
