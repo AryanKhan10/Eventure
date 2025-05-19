@@ -8,15 +8,18 @@ function EventDetails() {
   const { selectedEvent } = useSelector((state) => state.event);
   const [eventDate, setEventDate] = useState(null)
   const [eventTime, setEventTime] = useState(null)
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch();
   const eventId = useParams();
   console.log(eventId);
 
   const getEvent = async () => {
+    setLoading(true)
     const result = await fetchEventDetails(token, eventId);
     if (result) {
       dispatch(setSelectedEvent(result));
     }
+    setLoading(false)
   };
 
   useEffect(() => {

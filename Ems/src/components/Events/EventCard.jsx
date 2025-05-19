@@ -124,6 +124,7 @@ import { Calendar, Clock, MapPin, Users, Ticket, Edit, Trash2, ArrowRight } from
 const EventCard = ({ event, setConfirmationModal }) => {
   // console.log(event)
   const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const [loading, setloading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -159,7 +160,7 @@ const EventCard = ({ event, setConfirmationModal }) => {
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border border-gray-200">
       {/* Image Container */}
-      <Link to={`/events/${event.id}`} className="block">
+      <Link to={`/events/organizer/${user.id}/event/${event.id}`} className="block">
       <div className="relative h-52 overflow-hidden">
         <img 
           src={event.image} 

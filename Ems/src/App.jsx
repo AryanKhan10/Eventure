@@ -7,6 +7,7 @@ import './App.css'
 import { useSelector } from 'react-redux'
 import CreateEvent from './pages/CreateEvent'
 import MyEvent from './pages/MyEvent'
+import EventDetails from './components/Events/EventDetails'
 function App() {
   const role = useSelector(state => state.auth?.user?.role)
   return (
@@ -21,6 +22,7 @@ function App() {
             <>
              <Route path='create-event' element={<CreateEvent/>}/>
              <Route path='my-events' element={<MyEvent/>}/>
+             <Route path='events/organizer/:organierId/event/:eventId' element={<EventDetails/>}/>
             </>
           
         }
