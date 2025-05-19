@@ -1,48 +1,74 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { setSelectedEvent } from "../../slices/event";
-
+import { useNavigate, useParams } from "react-router-dom";
+import { setSingleEvent } from "../../slices/event";
+import { fetchEventDetails } from "../../services/event";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Users,
+  Ticket,
+  ArrowLeft,
+  Share2,
+} from "lucide-react";
 function EventDetails() {
   const { token } = useSelector((state) => state.auth);
-  const { selectedEvent } = useSelector((state) => state.event);
-  const [eventDate, setEventDate] = useState(null)
-  const [eventTime, setEventTime] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const { singleEvent } = useSelector((state) => state.event);
+  const [eventDate, setEventDate] = useState(null);
+  const [eventTime, setEventTime] = useState(null);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const eventId = useParams();
-  console.log(eventId);
+  const navigate = useNavigate();
+  const { eventId } = useParams();
+  //   console.log(eventId);
 
-  const getEvent = async () => {
-    setLoading(true)
+  const getEventDetails = async () => {
+    setLoading(true);
     const result = await fetchEventDetails(token, eventId);
     if (result) {
-      dispatch(setSelectedEvent(result));
+      dispatch(setSingleEvent(result));
     }
-    setLoading(false)
+    setLoading(false);
   };
 
-  useEffect(() => {
-    fetchEventDetails();
+//   console.log(eventId)
+//   console.log(JSON.parse(localStorage.getItem("singleEvent")).id)
+
+useEffect(() => {
+        if(!localStorage.getItem("singleEvent") || JSON.parse(localStorage.getItem("singleEvent")).id != eventId){
+            getEventDetails();
+        }
   }, [token, dispatch]);
 
-  if (selectedEvent) {
-    const formattedDate = new Date(selectedEvent.dateTime).toLocaleDateString();
-    const formattedTime = new Date(selectedEvent.dateTime).toLocaleTimeString(
-      [],
-      {
-        hour: "2-digit",
-        minute: "2-digit",
-      }
+  useEffect(() => {
+    if (singleEvent?.dateTime) {
 
-    );
-    setEventDate(formattedDate)
-    setEventTime(formattedTime)
-  }
+      const formattedDate = new Date(
+        singleEvent.dateTime
+      ).toLocaleDateString();
+
+      const formattedTime = new Date(singleEvent.dateTime).toLocaleTimeString(
+        [],
+        {
+          hour: "2-digit",
+          minute: "2-digit",
+        }
+      );
+
+      setEventDate(formattedDate);
+      setEventTime(formattedTime);
+    }
+  }, [singleEvent]);
+
   return (
     <div className="min-h-screen bg-gray-100 pb-12">
       {loading ? (
         <div>loading..</div>
+      ) : !singleEvent ? (
+        <div className="h-[100dvh] text-xl font-semibold flex justify-center items-center">
+          Something went wrong
+        </div>
       ) : (
         <>
           {/* Hero Section */}
@@ -59,9 +85,9 @@ function EventDetails() {
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <button className="absolute top-4 right-4 text-white bg-black/30 p-2 rounded-full hover:bg-black/50 transition-colors">
+            {/* <button className="absolute top-4 right-4 text-white bg-black/30 p-2 rounded-full hover:bg-black/50 transition-colors">
               <Share2 className="w-6 h-6" />
-            </button>
+            </button> */}
           </div>
 
           {/* Content */}
@@ -70,17 +96,17 @@ function EventDetails() {
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                    {selectedEvent.title}
+                    {singleEvent?.title}
                   </h1>
                   <p className="text-gray-600">
-                    Organized by {selectedEvent.organizer}
+                    Organized by {singleEvent?.organizer.name}
                   </p>
                 </div>
                 <div className="bg-purple-100 px-4 py-2 rounded-full">
                   <div className="flex items-center">
                     <Ticket className="w-5 h-5 text-purple-600 mr-2" />
                     <span className="font-semibold text-purple-600">
-                      Rs {selectedEvent.ticketPrice}
+                      Rs {singleEvent?.ticketPrice}
                     </span>
                   </div>
                 </div>
@@ -105,7 +131,9 @@ function EventDetails() {
                   <Users className="w-5 h-5 text-purple-600 mr-3" />
                   <div>
                     <p className="text-sm text-gray-500">Capacity</p>
-                    <p className="font-medium">{selectedEvent.capacity} attendees</p>
+                    <p className="font-medium">
+                      {singleEvent?.capacity} attendees
+                    </p>
                   </div>
                 </div>
               </div>
@@ -115,7 +143,7 @@ function EventDetails() {
                   <MapPin className="w-5 h-5 text-purple-600 mr-3 mt-1" />
                   <div>
                     <p className="text-sm text-gray-500">Location</p>
-                    <p className="font-medium">{selectedEvent.location}</p>
+                    <p className="font-medium">{singleEvent?.location}</p>
                   </div>
                 </div>
               </div>
@@ -123,11 +151,13 @@ function EventDetails() {
               <div className="mb-8">
                 <h2 className="text-xl font-semibold mb-4">About This Event</h2>
                 <div className="prose max-w-none">
-                  {selectedEvent.description.split("\n").map((paragraph, index) => (
-                    <p key={index} className="mb-4 text-gray-700">
-                      {paragraph}
-                    </p>
-                  ))}
+                  {singleEvent?.description
+                    .split("\n")
+                    .map((paragraph, index) => (
+                      <p key={index} className="mb-4 text-gray-700">
+                        {paragraph}
+                      </p>
+                    ))}
                 </div>
               </div>
 
@@ -145,11 +175,7 @@ function EventDetails() {
             </div>
           </div> */}
 
-              <div className="flex justify-center">
-                <button className="bg-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-purple-700 transition-colors">
-                  Register Now
-                </button>
-              </div>
+
             </div>
           </div>
         </>

@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState ={
     editable: false,
-    selectedEvent:null,
+    selectedEvent: null,
+    singleEvent: localStorage.getItem("singleEvent") ? JSON.parse(localStorage.getItem("singleEvent")):null,
     events: localStorage.getItem("events") ? JSON.parse(localStorage.getItem("events")) :[]
 }
 
@@ -19,9 +20,14 @@ const eventSlice = createSlice({
         },
         setSelectedEvent:(state, action)=>{
             state.selectedEvent = action.payload;
-        }
+        },
+        setSingleEvent:(state, action)=>{
+            state.singleEvent = action.payload;
+            localStorage.setItem("singleEvent", JSON.stringify(action.payload))
+        },
+            
     }
 })
 
-export const { setEvent, setIsEditable, setSelectedEvent } = eventSlice.actions
+export const { setEvent, setIsEditable, setSelectedEvent, setSingleEvent } = eventSlice.actions
 export default eventSlice.reducer

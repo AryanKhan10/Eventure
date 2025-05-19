@@ -159,10 +159,11 @@ const getEvent = async (req, res) => {
         const event = await prisma.event.findUnique({
             where: {
                 id: eventId,
-                organizer: userId, 
+                organizerId: userId, 
             },
             include: {
-                tickets: true,
+                // ticket: true,
+                organizer:true
             }
         })
         if (!event) {

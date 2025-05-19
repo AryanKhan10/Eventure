@@ -74,16 +74,37 @@ export const deleteEvent = async(token,eventId)=>{
         console.log(res.data)
 
         if(!res.data.success){
-            toast.error(res.data.message || "Couldn't fetch events");
-            throw new Error("Error fetching events")
+            toast.error(res.data.message || "Couldn't delete the event");
+            throw new Error("Error deleting the event")
         }
-        toast.success(res.data.message || "Got All Events")
+        toast.success(res.data.message || "Event deleted")
 
         return true
 
     } catch (error) {
-        console.log("Error fetching events",error)
-        toast.error(error?.response?.data?.message || error.message || "Something went wrong while fetching eventts");
+        console.log("Error deleting the event",error)
+        toast.error(error?.response?.data?.message || error.message || "Something went wrong while deleting the event");
+    }
+
+}
+export const fetchEventDetails = async(token,eventId)=>{
+    try {
+        const res = await apiConnector("GET",`${eventEndpoints.GET_EVENT_DETAILS_API}/${eventId}`,null,
+            {authorization: `Bearer ${token}`}, 
+        )
+        console.log(res.data)
+
+        if(!res.data.success){
+            toast.error(res.data.message || "Couldn't fetch event details");
+            throw new Error("Error fetching event details")
+        }
+        toast.success(res.data.message || "Event details fetched")
+
+        return res.data.event
+
+    } catch (error) {
+        console.log("Error fetching event details",error)
+        toast.error(error?.response?.data?.message || error.message || "Something went wrong while fetching event details");
     }
 
 }
