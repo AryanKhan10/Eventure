@@ -22,7 +22,7 @@ const createEvent = async (req, res) => {
                 title,
                 description,
                 ticketPrice:parseFloat(ticketPrice),
-                dateTime:new Date(formattedDate),
+                dateTime,
                 location,
                 organizerId:userId, 
                 capacity:Number(capacity),
@@ -46,19 +46,20 @@ const createEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
     try {
+        console.log(req.body)
         const { eventId } = req.params;
-        const { title, description, ticketPrice, dateTime, location } = req.body;
-        if(!title || !description || ticketPrice || dateTime || !location){
+        const { title, description, ticketPrice, dateTime, location, capacity } = req.body;
+        if(!title || !description || !ticketPrice || !dateTime || !location || !capacity){
             return res.status(400).json({ 
                 success: false,
                 message: "All fields are required"
             });
         }
         const userId = req.user.id;
-        const event = await prisma.findUnique({
+        const event = await prisma.event.findUnique({
             where: {
                 id: eventId,
-                organizer: userId, 
+                organizerId: userId, 
             },
         })
         if (!event) {
@@ -74,9 +75,10 @@ const updateEvent = async (req, res) => {
             data: {
                 title,
                 description,
-                ticketPrice,
+                ticketPrice: parseFloat(ticketPrice),
                 dateTime,
                 location,
+                capacity:Number(capacity)
             },
         });
         res.status(200).json({ 

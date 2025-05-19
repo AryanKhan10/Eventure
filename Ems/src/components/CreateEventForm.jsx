@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { setEvent, setSelectedEvent } from "../slices/event";
-import { createEvent } from "../services/event";
+import { setIsEditable, setSelectedEvent } from "../slices/event";
+import { createEvent, updateEvent } from "../services/event";
 import { useNavigate } from "react-router-dom";
 function CreateEventForm() {
   const { editable, selectedEvent } = useSelector((state) => state.event);
   const { token } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -28,10 +29,11 @@ function CreateEventForm() {
   });
 
   useEffect(() => {
+    console.log(editable)
     if (editable) {
-      const formData = getValues();
-      console.log(selectedEvent.dateTime);
-      console.log(formData);
+      // const formData = getValues();
+      // console.log(selectedEvent.dateTime);
+      // console.log(formData);
       setValue("title", selectedEvent.title);
       setValue("description", selectedEvent.description);
       setValue("ticketPrice", selectedEvent.ticketPrice);
@@ -56,29 +58,30 @@ function CreateEventForm() {
 
   const submit = (data) => {
     // Concatenate date and time into a single dateTime string
-    console.log(data);
+    // console.log(data);
 
     if (editable) {
-      console.log("yraa")
+      // console.log("yraa");
       let dateTime = null;
-    if (data.date && data.time) {
-      const [hours, minutes] = data.time.split(":");
-      const dateObj = new Date(data.date);
-      dateObj.setHours(parseInt(hours, 10), parseInt(minutes, 10));
-      dateTime = dateObj.toISOString();
-    }
+      if (data.date && data.time) {
+        const [hours, minutes] = data.time.split(":");
+        const dateObj = new Date(data.date);
+        dateObj.setHours(parseInt(hours, 10), parseInt(minutes, 10));
+        dateTime = dateObj.toISOString();
+      }
 
-    // Create the final data object, replacing separate date and time with dateTime
-    const finalData = {
-      ...data,
-      dateTime,
-    };
+      // Create the final data object, replacing separate date and time with dateTime
+      const finalData = {
+        eventId:selectedEvent.id,
+        ...data,
+        dateTime,
+      };
 
-    // Remove the separate date and time fields
-    delete finalData.date;
-    delete finalData.time;
+      // Remove the separate date and time fields
+      delete finalData.date;
+      delete finalData.time;
 
-    console.log(selectedEvent, data)
+      // console.log(selectedEvent, data);
       if (
         selectedEvent.title === data.title &&
         selectedEvent.description === data.description &&
@@ -87,39 +90,51 @@ function CreateEventForm() {
         selectedEvent.location === data.location &&
         selectedEvent.dateTime === data.dateTime
       ) {
-        console.log("nothing changed")
-        navigate('/my-events')
-      }else{
+        console.log("nothing changed");
+        dispatch(setIsEditable(false))
+        dispatch(setSelectedEvent(null));
+        navigate("/my-events");
+      } else {
+        console.log(finalData)
         //TODO update call
+        setLoading(true);
+        const result = updateEvent(finalData, token);
+        setLoading(false);
+        if (result) {
+          dispatch(setSelectedEvent(null));
+          dispatch(setIsEditable(false))
+          navigate('/my-events')
+
+        }
+      }
+    } else {
+      let dateTime = null;
+      if (data.date && data.time) {
+        const [hours, minutes] = data.time.split(":");
+        const dateObj = new Date(data.date);
+        dateObj.setHours(parseInt(hours, 10), parseInt(minutes, 10));
+        dateTime = dateObj.toISOString();
       }
 
-    }else{
-    let dateTime = null;
-    if (data.date && data.time) {
-      const [hours, minutes] = data.time.split(":");
-      const dateObj = new Date(data.date);
-      dateObj.setHours(parseInt(hours, 10), parseInt(minutes, 10));
-      dateTime = dateObj.toISOString();
+      // Create the final data object, replacing separate date and time with dateTime
+      const finalData = {
+        ...data,
+        dateTime,
+      };
+
+      // Remove the separate date and time fields
+      delete finalData.date;
+      delete finalData.time;
+
+      console.log("Submitted data:", finalData.dateTime);
+      setLoading(true);
+      const result = createEvent(finalData, token);
+      setLoading(false);
+      if (result) {
+        dispatch(setSelectedEvent(null));
+        navigate('/my-events')
+      }
     }
-
-    // Create the final data object, replacing separate date and time with dateTime
-    const finalData = {
-      ...data,
-      dateTime,
-    };
-
-    // Remove the separate date and time fields
-    delete finalData.date;
-    delete finalData.time;
-
-    console.log("Submitted data:", finalData.dateTime);
-    const result = createEvent(finalData, token);
-
-    if (result) {
-      setSelectedEvent(result);
-      // navigate('/my-events')
-    }
-  }
   };
 
   return (
@@ -321,10 +336,15 @@ function CreateEventForm() {
           {/* Submit Button */}
           <div className="pt-4">
             <button
+              disabled={loading}
               type="submit"
-              className="w-full bg-gradient-to-r from-violet-500 to-purple-500 text-white py-3 rounded-md hover:opacity-90 transition-colors font-medium"
+              className="w-full bg-gradient-to-r from-violet-500 to-purple-500 text-white py-3 rounded-md hover:opacity-90 transition-colors font-medium cursor-pointer"
             >
-              {editable ? "Update Event" : "Create Event"}
+              {loading
+                ? "loading..."
+                : editable
+                ? "Update Event"
+                : "Create Event"}
             </button>
           </div>
         </form>
